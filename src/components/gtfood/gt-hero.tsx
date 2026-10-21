@@ -20,12 +20,12 @@ export default function GtHero() {
           <p className="text-[12px] font-bold tracking-[0.22em] uppercase text-[var(--gt-gold)]">
             Nourishing New York Communities
           </p>
-          <h1 className="font-serif-display mt-5 text-white font-extrabold uppercase leading-[1.08] text-[40px] sm:text-[52px] lg:text-[62px] max-w-[640px]">
-            Clinically Rigorous.
+          <h1 className="font-serif-display mt-5 text-white font-extrabold leading-[1.08] text-[40px] sm:text-[52px] lg:text-[62px] max-w-[640px]">
+            Rooted in culture.
             <br />
-            Culturally Authentic.
+            Crafted with care.
             <br />
-            <span className="text-[var(--gt-gold)]">Fresh-Prepared.</span>
+            <span className="text-[var(--gt-gold)]">Delivered fresh</span>
           </h1>
           <p className="mt-6 text-white/90 text-[16.5px] leading-relaxed max-w-[520px]">
             GT Food Group brings together clinical nutrition, culturally
