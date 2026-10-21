@@ -1,6 +1,6 @@
 import { ArrowRight, HeartHandshake, Salad, Users, UtensilsCrossed } from "lucide-react";
 
-const HERO_IMAGE = "/images/gt/Fresh Harvest Over the Brooklyn Skyline.png";
+const HERO_IMAGE = "/images/gt/fresh-harvest.jpg";
 
 export default function GtHero() {
   return (

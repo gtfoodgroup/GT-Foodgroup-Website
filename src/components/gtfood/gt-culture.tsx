@@ -75,7 +75,7 @@ export function GtClinicalAuthority() {
         {/* Portrait — full-bleed left half */}
         <div className="relative min-h-[460px] sm:min-h-[560px] lg:min-h-[680px]">
           <img
-            src="/images/gt/Woman Seated on Brownstone Stoop.png"
+            src="/images/gt/maya-brownstone.jpg"
             alt="Maya Feller seated on brownstone steps"
             className="absolute inset-0 w-full h-full object-cover object-[center_35%]"
             loading="lazy"

@@ -8,7 +8,7 @@ export function MayaHero() {
       <div className="grid lg:grid-cols-2">
         <div className="relative min-h-[420px] sm:min-h-[520px] lg:min-h-[560px]">
           <img
-            src="/images/gt/Woman Seated on Brownstone Stoop.png"
+            src="/images/gt/maya-brownstone.jpg"
             alt="Maya Feller seated on brownstone steps"
             className="absolute inset-0 w-full h-full object-cover object-[center_35%]"
           />
@@ -63,7 +63,7 @@ export function AboutMaya() {
             inclusive, anti-bias, patient-centered, and culturally humble.
           </p>
           <img
-            src="/images/gt/Joyful Cooking in a Modern Kitchen.png"
+            src="/images/gt/maya-cooking.jpg"
             alt="Maya Feller cooking at a kitchen counter"
             className="mt-10 w-full max-w-[560px] aspect-[4/3] object-cover object-[center_25%]"
             loading="lazy"

@@ -79,7 +79,7 @@ export function GtCtaBand() {
     <section id="partner" className="relative overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: 'url("/images/gt/Brooklyn Bridge at Twilight Manhattan.png")' }}
+        style={{ backgroundImage: 'url("/images/gt/brooklyn-bridge-twilight.jpg")' }}
         role="img"
         aria-label="The Brooklyn Bridge and Manhattan skyline at twilight"
       />
