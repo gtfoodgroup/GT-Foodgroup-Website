@@ -1,3 +1,6 @@
+"use client";
+
+import { tx, useLang } from "./language";
 import {
   ArrowRight,
   Apple,
@@ -21,6 +24,7 @@ import { GtLeafLogo } from "./gt-header";
 /* ================= Hero — green copy panel, skyline meal on the right ================= */
 
 export function ProgramsHero() {
+  const { lang } = useLang();
   return (
     <section className="bg-[var(--gt-green)]">
       <div className="grid lg:grid-cols-2">
@@ -30,28 +34,30 @@ export function ProgramsHero() {
           </div>
           <div className="relative z-10 w-full px-6 py-16 sm:px-10 lg:py-20 lg:pl-[max(1.5rem,calc((100vw-1320px)/2+1.5rem))] lg:pr-14">
             <p className="text-[12px] font-bold tracking-[0.22em] uppercase text-[var(--gt-gold)]">
-              Our Programs
+              {tx(lang, "Our Programs", "Nuestros programas")}
             </p>
             <h1 className="font-serif-display mt-4 text-white font-bold leading-[1.08] text-[38px] sm:text-[48px] lg:text-[56px] max-w-[520px]">
-              Nutrition programs built around the people you serve.
+              {tx(lang, "Nutrition programs built around the people you serve.", "Programas de nutrición construidos alrededor de las personas a quienes usted sirve.")}
             </h1>
             <p className="mt-6 text-white/85 text-[15.5px] leading-relaxed max-w-[460px]">
-              GT Food Group supports healthcare and community partners with
-              culturally relevant nutrition services built around clear clinical
-              and operational workflows.
+              {tx(
+                lang,
+                "GT Food Group supports healthcare and community partners with culturally relevant nutrition services built around clear clinical and operational workflows.",
+                "GT Food Group apoya a socios de salud y comunidad con servicios de nutrición culturalmente relevantes, construidos sobre flujos clínicos y operativos claros.",
+              )}
             </p>
             <a
               href="#partner"
               className="mt-8 inline-flex items-center gap-2 rounded-md bg-[var(--gt-gold)] hover:bg-[var(--gt-gold-deep)] text-[var(--gt-green-deep)] text-[14px] font-bold px-6 py-3.5 transition-colors"
             >
-              Partner With Us <ArrowRight className="w-4 h-4" />
+              {tx(lang, "Partner With Us", "Colabore con GT")} <ArrowRight className="w-4 h-4" />
             </a>
           </div>
         </div>
         <div className="relative min-h-[280px] sm:min-h-[380px] lg:min-h-[520px]">
           <img
             src="/images/gt/programs-hero-skyline.jpg"
-            alt="A bowl of grains and grilled vegetables in front of the New York City skyline at sunset"
+            alt={tx(lang, "A bowl of grains and grilled vegetables in front of the New York City skyline at sunset", "Un bowl de granos y vegetales a la parrilla frente al horizonte de la ciudad de Nueva York al atardecer")}
             className="absolute inset-0 w-full h-full object-cover object-[center_55%]"
           />
         </div>
@@ -122,10 +128,38 @@ const DETAILS: ProgramDetail[] = [
   },
 ];
 
+const DETAIL_ES: Record<string, { eyebrow: string; headline: string; body: string; alt: string; strip: string[]; cta?: string }> = {
+  "medically-tailored-meals": {
+    eyebrow: "Comidas médicamente adaptadas",
+    headline: "Nutrición diseñada alrededor de necesidades clínicas específicas.",
+    body: "Los programas de comidas médicamente adaptadas de GT combinan comida culturalmente familiar con estándares de menú dirigidos por una nutricionista dietista registrada y flujos de orden dietética específicos para cada miembro.",
+    alt: "Salmón a la parrilla con granos, brócoli y vegetales asados",
+    strip: ["Desarrollo de menú dirigido por RDN", "Cocina culturalmente relevante", "Flujo clínico específico del miembro", "Entrega de servicio documentada"],
+    cta: "Autoridad clínica",
+  },
+  "home-delivered-meals": {
+    eyebrow: "Comidas a domicilio clínicamente apropiadas",
+    headline: "Comida nutritiva sin perder lo familiar.",
+    body: "Comidas recién preparadas para miembros que necesitan un apoyo nutricional confiable dentro de pautas saludables, manteniendo los sabores familiares y la comida culturalmente relevante en el centro de la experiencia.",
+    alt: "Arroz, habichuelas negras, plátanos y pollo en un bowl blanco",
+    strip: ["Porciones equilibradas", "Menús culturalmente familiares", "Comidas recién preparadas", "Entrega confiable a domicilio"],
+  },
+  "food-prescription-boxes": {
+    eyebrow: "Cajas de prescripción de alimentos",
+    headline: "Ingredientes frescos para la forma en que las familias realmente cocinan.",
+    body: "GT Food Group combina productos frescos, proteínas, lácteos y básicos culturalmente relevantes en cajas de alimentos pensadas según las necesidades nutricionales y las formas familiares de cocinar en casa.",
+    alt: "Una caja de GT Food Group llena de vegetales frescos",
+    strip: ["Productos frescos", "Proteínas y lácteos", "Básicos culturalmente relevantes", "Composición guiada por RDN cuando se requiere clínicamente"],
+    cta: "Explore nuestros menús",
+  },
+};
+
 export function ProgramDetailSections() {
+  const { lang } = useLang();
   return (
     <div id="programs-detail">
       {DETAILS.map((d, i) => {
+        const es = DETAIL_ES[d.id];
         const flip = i % 2 === 1;
         return (
           <section
@@ -142,7 +176,7 @@ export function ProgramDetailSections() {
               >
                 <img
                   src={d.image}
-                  alt={d.alt}
+                  alt={tx(lang, d.alt, es.alt)}
                   className="absolute inset-0 w-full h-full object-cover"
                   loading="lazy"
                 />
@@ -151,19 +185,19 @@ export function ProgramDetailSections() {
               <div className={`flex items-center ${flip ? "lg:order-1" : ""}`}>
                 <div className="w-full px-6 py-12 sm:px-10 lg:px-14 lg:py-16 xl:px-16">
                   <div className="max-w-[580px]">
-                    <Eyebrow tone="rose">{d.eyebrow}</Eyebrow>
+                    <Eyebrow tone="rose">{tx(lang, d.eyebrow, es.eyebrow)}</Eyebrow>
                     <h2
                       id={`${d.id}-title`}
                       className="font-serif-display mt-4 text-[var(--gt-green)] font-bold leading-[1.14] text-[30px] lg:text-[38px] max-w-[500px]"
                     >
-                      {d.headline}
+                      {tx(lang, d.headline, es.headline)}
                     </h2>
                     <p className="mt-4 text-[var(--gt-body)] text-[15.5px] leading-relaxed">
-                      {d.body}
+                      {tx(lang, d.body, es.body)}
                     </p>
 
                     <ul className="mt-7 grid grid-cols-2 sm:grid-cols-4 gap-y-5 sm:divide-x sm:divide-[var(--gt-border)]">
-                      {d.strip.map(({ icon: Icon, label }) => (
+                      {d.strip.map(({ icon: Icon, label }, stripIndex) => (
                         <li key={label} className="flex flex-col items-center text-center px-3">
                           <Icon
                             className="w-6 h-6 text-[var(--gt-green)]"
@@ -171,7 +205,7 @@ export function ProgramDetailSections() {
                             aria-hidden="true"
                           />
                           <span className="mt-2 text-[12px] font-semibold text-[var(--gt-ink)] leading-snug">
-                            {label}
+                            {tx(lang, label, es.strip[stripIndex])}
                           </span>
                         </li>
                       ))}
@@ -182,7 +216,7 @@ export function ProgramDetailSections() {
                         href={d.cta.href}
                         className="mt-8 inline-flex items-center gap-2 rounded-md bg-[var(--gt-gold)] hover:bg-[var(--gt-gold-deep)] text-[var(--gt-green-deep)] text-[13.5px] font-bold px-6 py-3 transition-colors"
                       >
-                        {d.cta.label} <ArrowRight className="w-4 h-4" />
+                        {tx(lang, d.cta.label, es.cta ?? d.cta.label)} <ArrowRight className="w-4 h-4" />
                       </a>
                     )}
                   </div>
@@ -234,7 +268,16 @@ const STEPS: { title: string; text: string; owner: Owner }[] = [
   },
 ];
 
+const STEP_ES = [
+  { title: "Evaluación y elegibilidad de la SCN", text: "La Red de Cuidado Social evalúa al miembro y determina la elegibilidad.", owner: "Red de Cuidado Social" },
+  { title: "Autorización del servicio", text: "El servicio autorizado se refiere a través del flujo correspondiente de la red.", owner: "Red de Cuidado Social" },
+  { title: "Flujo de nutrición clínica", text: "Cuando se requiere, se emite una orden dietética específica del miembro bajo la supervisión de una nutricionista dietista registrada.", owner: "Dietista registrada" },
+  { title: "Servicio de alimentos de GT", text: "GT prepara y entrega la comida o la caja de alimentos autorizada.", owner: "GT Food Group" },
+  { title: "Documentación y revisión continua", text: "La documentación del servicio apoya la renovación, la modificación o la conclusión del servicio autorizado.", owner: "GT Food Group" },
+];
+
 export function HrsnWorkflow() {
+  const { lang } = useLang();
   return (
     <section
       aria-labelledby="hrsn-title"
@@ -245,12 +288,12 @@ export function HrsnWorkflow() {
       </div>
 
       <div className="relative max-w-[1320px] mx-auto px-6 py-16 lg:py-20">
-        <Eyebrow tone="gold">How The Program Works</Eyebrow>
+        <Eyebrow tone="gold">{tx(lang, "How The Program Works", "Cómo funciona el programa")}</Eyebrow>
         <h2
           id="hrsn-title"
           className="font-serif-display mt-4 text-white font-bold leading-[1.15] text-[32px] lg:text-[44px] max-w-[820px]"
         >
-          Clear responsibilities from eligibility to delivery.
+          {tx(lang, "Clear responsibilities from eligibility to delivery.", "Responsabilidades claras, desde la elegibilidad hasta la entrega.")}
         </h2>
 
         <ol className="mt-12 grid gap-9 lg:grid-cols-5 lg:gap-x-6">
@@ -269,10 +312,10 @@ export function HrsnWorkflow() {
                 {i + 1}
               </span>
               <div className="ml-4 lg:ml-0 lg:mt-4">
-                <h3 className="text-white font-bold text-[15px] leading-snug">{s.title}</h3>
+                <h3 className="text-white font-bold text-[15px] leading-snug">{tx(lang, s.title, STEP_ES[i].title)}</h3>
                 <p className="mt-2 text-white/75 text-[13px] leading-relaxed">
-                  <span className="sr-only">Responsible: {OWNER_LABEL[s.owner]}. </span>
-                  {s.text}
+                  <span className="sr-only">{tx(lang, "Responsible", "Responsable")}: {tx(lang, OWNER_LABEL[s.owner], STEP_ES[i].owner)}. </span>
+                  {tx(lang, s.text, STEP_ES[i].text)}
                 </p>
               </div>
             </li>
@@ -282,8 +325,11 @@ export function HrsnWorkflow() {
         <p className="mt-12 flex items-start sm:items-center justify-center gap-2.5 rounded-md bg-[var(--gt-rose-soft)] px-5 py-3 text-center text-[var(--gt-rose)] text-[13.5px] font-semibold leading-relaxed">
           <Info className="w-4.5 h-4.5 shrink-0 mt-0.5 sm:mt-0" strokeWidth={2.2} aria-hidden="true" />
           <span>
-            GT does not screen, enroll, or determine HRSN eligibility.
-            Eligibility remains with the member&rsquo;s Social Care Network.
+            {tx(
+              lang,
+              "GT does not screen, enroll, or determine HRSN eligibility. Eligibility remains with the member’s Social Care Network.",
+              "GT no evalúa, no inscribe ni determina la elegibilidad de HRSN. La elegibilidad permanece con la Red de Cuidado Social del miembro.",
+            )}
           </span>
         </p>
       </div>
@@ -320,23 +366,30 @@ const CAPABILITIES: {
   },
 ];
 
+const CAPABILITY_ES = [
+  { title: "Menús especiales y culturales", text: "Soluciones de menú diseñadas según necesidades culturales, religiosas, de textura y dietéticas, cuando las capacidades verificadas de GT lo permiten." },
+  { title: "Apoyo de nutrición clínica", text: "Coordinación de menú y orden dietética dirigida por RDN, integrada al flujo del servicio autorizado." },
+  { title: "Nutrición materna y familiar", text: "Apoyo alimentario diseñado para el embarazo, el posparto y los programas de nutrición centrados en la familia, cuando existe un contrato." },
+];
+
 export function GtPartnerSupport() {
+  const { lang } = useLang();
   const published = CAPABILITIES.filter((c) => c.verified);
   if (published.length === 0) return null;
 
   return (
-    <section aria-label="More ways we support partners" className="bg-[var(--gt-cream)] py-14 lg:py-16">
+    <section aria-label={tx(lang, "More ways we support partners", "Otras formas en que apoyamos a los socios")} className="bg-[var(--gt-cream)] py-14 lg:py-16">
       <div className="max-w-[1320px] mx-auto px-6">
-        <Eyebrow tone="rose">More Ways We Support Partners</Eyebrow>
+        <Eyebrow tone="rose">{tx(lang, "More Ways We Support Partners", "Otras formas de apoyar a los socios")}</Eyebrow>
         <div className="mt-7 grid md:grid-cols-3 gap-5">
-          {published.map(({ icon: Icon, title, text }) => (
+          {published.map(({ icon: Icon, title, text }, i) => (
             <div key={title} className="flex items-start gap-5 rounded-md bg-[var(--gt-rose-soft)] p-6">
               <Icon className="w-8 h-8 shrink-0 text-[var(--gt-rose)]" strokeWidth={1.6} aria-hidden="true" />
               <div>
                 <h3 className="font-serif-display text-[var(--gt-ink)] font-bold text-[18px] leading-snug">
-                  {title}
+                  {tx(lang, title, CAPABILITY_ES[i].title)}
                 </h3>
-                <p className="mt-2 text-[var(--gt-body)] text-[13.5px] leading-relaxed">{text}</p>
+                <p className="mt-2 text-[var(--gt-body)] text-[13.5px] leading-relaxed">{tx(lang, text, CAPABILITY_ES[i].text)}</p>
               </div>
             </div>
           ))}
@@ -349,6 +402,7 @@ export function GtPartnerSupport() {
 /* ================= Closing CTA — warm band, leaves left, skyline right ================= */
 
 export function ProgramsCtaBand() {
+  const { lang } = useLang();
   return (
     <section
       id="partner"
@@ -377,17 +431,20 @@ export function ProgramsCtaBand() {
           id="partner-title"
           className="font-serif-display mx-auto text-[var(--gt-green)] font-bold leading-[1.15] text-[32px] lg:text-[42px] max-w-[680px]"
         >
-          Start with the population you need to serve.
+          {tx(lang, "Start with the population you need to serve.", "Empiece por la población a la que necesita servir.")}
         </h2>
         <p className="mt-4 mx-auto text-[var(--gt-body)] text-[15.5px] leading-relaxed max-w-[560px]">
-          Tell us the geography, service model, and member experience you are
-          trying to build. We&rsquo;ll show you how GT can fit.
+          {tx(
+            lang,
+            "Tell us the geography, service model, and member experience you are trying to build. We’ll show you how GT can fit.",
+            "Cuéntenos la geografía, el modelo de servicio y la experiencia del miembro que quiere construir. Le mostraremos cómo puede encajar GT.",
+          )}
         </p>
         <a
           href="/contact"
           className="mt-7 inline-flex items-center gap-2 rounded-md bg-[var(--gt-gold)] hover:bg-[var(--gt-gold-deep)] text-[var(--gt-green-deep)] text-[14px] font-bold px-7 py-3.5 transition-colors"
         >
-          Begin a Partnership Conversation <ArrowRight className="w-4 h-4" />
+          {tx(lang, "Begin a Partnership Conversation", "Inicie una conversación de colaboración")} <ArrowRight className="w-4 h-4" />
         </a>
       </div>
     </section>

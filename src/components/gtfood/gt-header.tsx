@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowRight, Menu, Sprout, X } from "lucide-react";
+import { LanguageTabs, tx, useLang } from "./language";
 
 export function GtLogo({ className = "h-12 w-auto" }: { className?: string }) {
   return (
@@ -37,15 +38,15 @@ export function GtLeafLogo({
 /* Desktop nav = the six primary sections per brand spec.
    Home lives in the logo link; Our Standards remains reachable from
    the homepage footer and the mobile menu. */
-const NAV_LINKS: { label: string; href: string; mobileOnly?: boolean }[] = [
-  { label: "Programs", href: "/programs" },
-  { label: "Menus & Culture", href: "/menus" },
-  { label: "Clinical Authority", href: "/clinical-authority" },
-  { label: "Who We Serve", href: "/who-we-serve" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-  { label: "Home", href: "/", mobileOnly: true },
-  { label: "Our Standards", href: "/our-standards", mobileOnly: true },
+const NAV_LINKS: { href: string; mobileOnly?: boolean; en: string; es: string }[] = [
+  { href: "/programs", en: "Programs", es: "Programas" },
+  { href: "/menus", en: "Menus & Culture", es: "Menús y cultura" },
+  { href: "/clinical-authority", en: "Clinical Authority", es: "Autoridad clínica" },
+  { href: "/who-we-serve", en: "Who We Serve", es: "A quién servimos" },
+  { href: "/about", en: "About", es: "Nosotros" },
+  { href: "/contact", en: "Contact", es: "Contacto" },
+  { href: "/", en: "Home", es: "Inicio", mobileOnly: true },
+  { href: "/our-standards", en: "Our Standards", es: "Nuestros estándares", mobileOnly: true },
 ];
 
 function useActiveNav() {
@@ -67,6 +68,7 @@ export default function GtHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const isActive = useActiveNav();
+  const { lang } = useLang();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -78,12 +80,17 @@ export default function GtHeader() {
     <div className="sticky top-0 z-50">
       {/* Top utility bar */}
       <div className="bg-[var(--gt-green-deep)] text-white">
-        <div className="max-w-[1320px] mx-auto px-6 h-9 flex items-center justify-between text-[11px] tracking-[0.14em] font-semibold uppercase">
-          <p>Good food. Stronger people. Brighter communities.</p>
-          <p className="hidden sm:flex items-center gap-1.5">
-            Proudly Serving New York
-            <Sprout className="w-3.5 h-3.5 text-[var(--gt-gold)]" />
+        <div className="max-w-[1320px] mx-auto px-6 h-11 flex items-center justify-between gap-4 text-[11px] tracking-[0.14em] font-semibold uppercase">
+          <p className="hidden lg:block truncate">
+            {tx(lang, "Good food. Stronger people. Brighter communities.", "Buena comida. Personas más fuertes. Comunidades más brillantes.")}
           </p>
+          <div className="ml-auto flex items-center gap-4">
+            <LanguageTabs />
+            <p className="hidden sm:flex items-center gap-1.5">
+              {tx(lang, "Proudly Serving New York", "Servimos a Nueva York")}
+              <Sprout className="w-3.5 h-3.5 text-[var(--gt-gold)]" />
+            </p>
+          </div>
         </div>
       </div>
 
@@ -95,15 +102,15 @@ export default function GtHeader() {
       >
         <div className="max-w-[1320px] mx-auto px-6 h-[72px] xl:h-[88px] flex items-center justify-between gap-6">
           {/* Horizontal GT logo — links Home (~300px on desktop) */}
-          <a href="/" className="shrink-0" aria-label="GT Food Group home">
+          <a href="/" className="shrink-0" aria-label={tx(lang, "GT Food Group home", "Inicio de GT Food Group")}>
             <GtLogo className="h-11 w-auto xl:h-[62px]" />
           </a>
 
           {/* Desktop nav */}
-          <nav aria-label="Main navigation" className="hidden xl:flex items-center gap-0.5">
+          <nav aria-label={tx(lang, "Main navigation", "Navegación principal")} className="hidden xl:flex items-center gap-0.5">
             {NAV_LINKS.filter((link) => !link.mobileOnly).map((link) => (
               <a
-                key={link.label}
+                key={link.href}
                 href={link.href}
                 className={`px-3 py-2 whitespace-nowrap rounded-full text-[13.5px] font-semibold transition-colors ${
                   isActive(link.href)
@@ -111,7 +118,7 @@ export default function GtHeader() {
                     : "text-[var(--gt-ink)] hover:text-[var(--gt-green)] hover:bg-[var(--gt-green)]/5"
                 }`}
               >
-                {link.label}
+                {tx(lang, link.en, link.es)}
               </a>
             ))}
           </nav>
@@ -121,10 +128,10 @@ export default function GtHeader() {
               href="/contact"
               className="hidden sm:inline-flex items-center gap-2 rounded-md bg-[var(--gt-gold)] hover:bg-[var(--gt-gold-deep)] text-[var(--gt-green-deep)] text-[13.5px] font-bold px-5 py-3 transition-colors"
             >
-              Partner With Us <ArrowRight className="w-4 h-4" />
+              {tx(lang, "Partner With Us", "Colabore con GT")} <ArrowRight className="w-4 h-4" />
             </a>
             <button
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-label={mobileOpen ? tx(lang, "Close menu", "Cerrar menú") : tx(lang, "Open menu", "Abrir menú")}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen(!mobileOpen)}
               className="xl:hidden text-[var(--gt-green)] p-1"
@@ -141,10 +148,10 @@ export default function GtHeader() {
           }`}
           inert={!mobileOpen}
         >
-          <nav aria-label="Mobile navigation" className="px-6 py-4 overflow-y-auto max-h-[70vh]">
+          <nav aria-label={tx(lang, "Mobile navigation", "Navegación móvil")} className="px-6 py-4 overflow-y-auto max-h-[70vh]">
             <ul>
               {NAV_LINKS.map((link) => (
-                <li key={link.label} className="border-b border-[var(--gt-border)] last:border-0">
+                <li key={link.href} className="border-b border-[var(--gt-border)] last:border-0">
                   <a
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
@@ -152,7 +159,7 @@ export default function GtHeader() {
                       isActive(link.href) ? "text-[var(--gt-green)]" : "text-[var(--gt-ink)]"
                     }`}
                   >
-                    {link.label}
+                    {tx(lang, link.en, link.es)}
                   </a>
                 </li>
               ))}
@@ -162,7 +169,7 @@ export default function GtHeader() {
               onClick={() => setMobileOpen(false)}
               className="mt-4 mb-2 flex w-full items-center justify-center gap-2 rounded-md bg-[var(--gt-gold)] text-[var(--gt-green-deep)] text-[14px] font-bold px-5 py-3.5"
             >
-              Partner With Us <ArrowRight className="w-4 h-4" />
+              {tx(lang, "Partner With Us", "Colabore con GT")} <ArrowRight className="w-4 h-4" />
             </a>
           </nav>
         </div>

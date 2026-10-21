@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { EB_Garamond, Public_Sans } from "next/font/google";
 import "./globals.css";
 import { SITE_URL } from "@/lib/site";
+import { LanguageProvider, type Lang } from "@/components/gtfood/language";
 
 const ebGaramond = EB_Garamond({
   variable: "--font-eb-garamond",
@@ -37,17 +39,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jar = await cookies();
+  const initialLang: Lang = jar.get("gt-lang")?.value === "es" ? "es" : "en";
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={initialLang} suppressHydrationWarning>
       <body
         className={`${ebGaramond.variable} ${publicSans.variable} antialiased bg-background text-foreground`}
       >
-        {children}
+        <LanguageProvider initialLang={initialLang}>{children}</LanguageProvider>
       </body>
     </html>
   );

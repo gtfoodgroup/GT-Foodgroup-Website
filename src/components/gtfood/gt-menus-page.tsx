@@ -1,14 +1,18 @@
+"use client";
+
 import { ArrowRight } from "lucide-react";
 import { Eyebrow } from "./gt-programs";
+import { tx, useLang } from "./language";
 
 /* ================= Hero ================= */
 
 export function MenusHero() {
+  const { lang } = useLang();
   return (
     <section className="relative bg-[#142C25] overflow-hidden min-h-[560px] lg:min-h-[640px] flex items-center">
       <img
         src="/images/gt/menus-hero.png"
-        alt="A table of yellow rice, beans, roasted chicken and fried plantains"
+        alt={tx(lang, "A table of yellow rice, beans, roasted chicken and fried plantains", "Una mesa con arroz amarillo, habichuelas, pollo asado y plátanos fritos")}
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div
@@ -20,22 +24,21 @@ export function MenusHero() {
       <div className="relative z-10 max-w-[1320px] mx-auto px-6 py-24 lg:py-28 w-full">
         <div className="max-w-[640px]">
           <p className="text-[12px] font-bold tracking-[0.22em] uppercase text-[var(--gt-gold)]">
-            Menus &amp; Culture
+            {tx(lang, "Menus & Culture", "Menús y cultura")}
           </p>
           <h1 className="font-serif-display mt-5 text-white font-bold leading-[1.05] text-[44px] sm:text-[56px] lg:text-[68px]">
-            Familiar food.
+            {tx(lang, "Familiar food.", "Comida familiar.")}
             <br />
-            <span className="text-[var(--gt-gold)]">Thoughtfully prepared.</span>
+            <span className="text-[var(--gt-gold)]">{tx(lang, "Thoughtfully prepared.", "Preparada con cuidado.")}</span>
           </h1>
           <p className="mt-6 text-white/90 text-[16.5px] leading-relaxed max-w-[480px]">
-            Food and culture come first. The plate should taste like the
-            kitchen people already know.
+            {tx(lang, "Food and culture come first. The plate should taste like the kitchen people already know.", "La comida y la cultura van primero. El plato debe saber a la cocina que la gente ya conoce.")}
           </p>
           <a
             href="#lanes"
             className="mt-8 inline-flex items-center gap-2 rounded-md bg-[var(--gt-gold)] hover:bg-[var(--gt-gold-deep)] text-[var(--gt-green-deep)] text-[14px] font-bold px-6 py-3.5 transition-colors"
           >
-            Explore the cuisines <ArrowRight className="w-4 h-4" />
+            {tx(lang, "Explore the cuisines", "Explore las cocinas")} <ArrowRight className="w-4 h-4" />
           </a>
         </div>
       </div>
@@ -135,10 +138,11 @@ const SPAN_CLASS: Record<Span, string> = {
 };
 
 export function CuisineLanes() {
+  const { lang } = useLang();
   return (
     <section id="lanes" aria-labelledby="lanes-title" className="scroll-mt-36 bg-[var(--gt-cream)] py-16 lg:py-24">
       <div className="max-w-[1320px] mx-auto px-6">
-        <Eyebrow>Cuisine lanes</Eyebrow>
+        <Eyebrow>{tx(lang, "Cuisine lanes", "Líneas de cocina")}</Eyebrow>
         <h2
           id="lanes-title"
           className="font-serif-display mt-4 text-[var(--gt-green)] font-bold leading-[1.15] text-[34px] lg:text-[46px] max-w-[720px]"
@@ -146,8 +150,7 @@ export function CuisineLanes() {
           Dominicana · Boricua · Cubana · Mexicana · Colombiana · Peruana · Caribeña · Soul Food · Sabores de New York
         </h2>
         <p className="mt-5 text-[var(--gt-body)] text-[15.5px] leading-relaxed max-w-[560px]">
-          Dish names show the kind of plate in each lane. They are not a
-          published menu.
+          {tx(lang, "Dish names show the kind of plate in each lane. They are not a published menu.", "Los nombres de los platos muestran el tipo de comida de cada línea. No son un menú publicado.")}
         </p>
 
         <ul className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 lg:gap-4">
@@ -201,20 +204,21 @@ const PANTRY = [
 ];
 
 export function PantrySection() {
+  const { lang } = useLang();
   return (
     <section id="pantry" aria-labelledby="pantry-title" className="scroll-mt-36 bg-white py-16 lg:py-24">
       <div className="max-w-[1320px] mx-auto px-6 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
         <div className="relative min-h-[300px] sm:min-h-[420px]">
           <img
             src="/images/gt/pantry-ingredients.png"
-            alt="Recao, ají dulce, calabaza, yuca, green plantains, queso fresco and achiote on a market table"
+            alt={tx(lang, "Recao, ají dulce, calabaza, yuca, green plantains, queso fresco and achiote on a market table", "Recao, ají dulce, calabaza, yuca, plátanos verdes, queso fresco y achiote sobre una mesa de mercado")}
             className="absolute inset-0 w-full h-full object-cover"
             loading="lazy"
           />
         </div>
 
         <div>
-          <Eyebrow tone="gold">The pantry</Eyebrow>
+          <Eyebrow tone="gold">{tx(lang, "The pantry", "La despensa")}</Eyebrow>
           <h2
             id="pantry-title"
             className="font-serif-display mt-4 text-[var(--gt-green)] font-bold leading-[1.2] text-[28px] sm:text-[34px] lg:text-[40px]"
@@ -232,8 +236,7 @@ export function PantrySection() {
             ))}
           </h2>
           <p className="mt-6 text-[var(--gt-body)] text-[15.5px] leading-relaxed max-w-[480px]">
-            These are the staples the lanes are built from. Names only — not
-            recipes.
+            {tx(lang, "These are the staples the lanes are built from. Names only — not recipes.", "Estos son los básicos con los que se construyen las líneas. Solo nombres, no recetas.")}
           </p>
         </div>
       </div>
@@ -244,6 +247,7 @@ export function PantrySection() {
 /* ================= Clinical modification — after the food ================= */
 
 export function PhilosophyBand() {
+  const { lang } = useLang();
   return (
     <section
       id="clinical"
@@ -253,18 +257,17 @@ export function PhilosophyBand() {
       <div className="max-w-[860px] mx-auto px-6 py-16 lg:py-24 text-center">
         <p className="inline-flex items-center gap-3 text-[11.5px] font-bold tracking-[0.22em] uppercase text-[var(--gt-gold)]">
           <span className="h-px w-8 bg-[var(--gt-gold)]" aria-hidden="true" />
-          Clinical modification
+          {tx(lang, "Clinical modification", "Modificación clínica")}
           <span className="h-px w-8 bg-[var(--gt-gold)]" aria-hidden="true" />
         </p>
         <h2
           id="clinical-title"
           className="font-serif-display mt-6 text-white font-bold leading-[1.2] text-[32px] sm:text-[40px] lg:text-[48px]"
         >
-          The cuisine stays. The nutrition standards are built around it.
+          {tx(lang, "The cuisine stays. The nutrition standards are built around it.", "La cocina se queda. Los estándares de nutrición se construyen a su alrededor.")}
         </h2>
         <p className="mt-6 text-white/75 text-[15.5px] leading-relaxed max-w-[560px] mx-auto">
-          A condition tag appears on a dish only when an RDN-signed menu
-          carries that modification. None are published on this page.
+          {tx(lang, "A condition tag appears on a dish only when an RDN-signed menu carries that modification. None are published on this page.", "Una etiqueta de condición aparece en un plato solo cuando un menú firmado por una RDN incluye esa modificación. Ninguna se publica en esta página.")}
         </p>
       </div>
     </section>

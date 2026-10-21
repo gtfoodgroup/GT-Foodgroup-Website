@@ -1,4 +1,7 @@
+"use client";
+
 import { ArrowRight, CookingPot, House, PackageOpen } from "lucide-react";
+import { tx, useLang, type Lang } from "./language";
 
 type Program = {
   image: string;
@@ -8,29 +11,31 @@ type Program = {
   text: string;
 };
 
-const PROGRAMS: Program[] = [
-  {
-    image: "/images/gt/program-mtm.png",
-    alt: "Grilled chicken with plantains, beans and rice",
-    icon: CookingPot,
-    title: "Medically Tailored Meals",
-    text: "RDN-led menus with clinical adjustments built into familiar, culturally relevant dishes.",
-  },
-  {
-    image: "/images/gt/program-hdm.png",
-    alt: "Nourishing grain bowl with roasted vegetables",
-    icon: House,
-    title: "Clinically Appropriate Home-Delivered Meals",
-    text: "Fresh-prepared meals shaped to clinical needs — making everyday eating simpler and more accessible.",
-  },
-  {
-    image: "/images/gt/program-produce.png",
-    alt: "Box filled with fresh produce and vegetables",
-    icon: PackageOpen,
-    title: "Food Prescription Boxes",
-    text: "Carefully chosen foods and pantry staples that fit real eating habits and familiar cooking.",
-  },
-];
+function programs(lang: Lang): Program[] {
+  return [
+    {
+      image: "/images/gt/program-mtm.png",
+      alt: tx(lang, "Grilled chicken with plantains, beans and rice", "Pollo a la parrilla con plátanos, habichuelas y arroz"),
+      icon: CookingPot,
+      title: tx(lang, "Medically Tailored Meals", "Comidas médicamente adaptadas"),
+      text: tx(lang, "RDN-led menus with clinical adjustments built into familiar, culturally relevant dishes.", "Menús dirigidos por RDN, con ajustes clínicos integrados en platos familiares y culturalmente relevantes."),
+    },
+    {
+      image: "/images/gt/program-hdm.png",
+      alt: tx(lang, "Nourishing grain bowl with roasted vegetables", "Bowl de granos con vegetales asados"),
+      icon: House,
+      title: tx(lang, "Clinically Appropriate Home-Delivered Meals", "Comidas a domicilio clínicamente apropiadas"),
+      text: tx(lang, "Fresh-prepared meals shaped to clinical needs — making everyday eating simpler and more accessible.", "Comidas recién preparadas según las necesidades clínicas, para que comer cada día sea más simple y accesible."),
+    },
+    {
+      image: "/images/gt/program-produce.png",
+      alt: tx(lang, "Box filled with fresh produce and vegetables", "Caja con productos frescos y vegetales"),
+      icon: PackageOpen,
+      title: tx(lang, "Food Prescription Boxes", "Cajas de prescripción de alimentos"),
+      text: tx(lang, "Carefully chosen foods and pantry staples that fit real eating habits and familiar cooking.", "Alimentos y básicos de despensa elegidos con cuidado, acordes a hábitos reales y a la cocina familiar."),
+    },
+  ];
+}
 
 function Eyebrow({ children, tone = "green" }: { children: React.ReactNode; tone?: "green" | "gold" | "rose" }) {
   const color =
@@ -46,33 +51,36 @@ function Eyebrow({ children, tone = "green" }: { children: React.ReactNode; tone
 export { Eyebrow };
 
 export default function GtPrograms() {
+  const { lang } = useLang();
   return (
     <section id="programs" className="bg-[var(--gt-cream)] py-20 lg:py-24">
       <div className="max-w-[1320px] mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-10 items-end">
           <div>
-            <Eyebrow>Our Programs</Eyebrow>
+            <Eyebrow>{tx(lang, "Our Programs", "Nuestros programas")}</Eyebrow>
             <h2 className="font-serif-display mt-4 text-[var(--gt-green)] font-bold leading-[1.15] text-[36px] lg:text-[46px] max-w-[520px]">
-              Nutrition designed around the people you serve.
+              {tx(lang, "Nutrition designed around the people you serve.", "Nutrición diseñada alrededor de las personas a quienes usted sirve.")}
             </h2>
           </div>
           <div className="lg:pl-10">
             <p className="text-[var(--gt-body)] text-[15.5px] leading-relaxed">
-              Medically tailored meals, home-delivered meals and produce
-              prescription boxes — prepared for the people New York&rsquo;s
-              health and social care partners serve.
+              {tx(
+                lang,
+                "Medically tailored meals, home-delivered meals and produce prescription boxes — prepared for the people New York’s health and social care partners serve.",
+                "Comidas médicamente adaptadas, comidas a domicilio y cajas de prescripción de alimentos, preparadas para las personas a quienes sirven los socios de salud y cuidado social de Nueva York.",
+              )}
             </p>
             <a
               href="/programs"
               className="mt-4 inline-flex items-center gap-2 text-[13.5px] font-bold text-[var(--gt-green)] hover:text-[var(--gt-green-soft)] transition-colors"
             >
-              View All Programs <ArrowRight className="w-4 h-4" />
+              {tx(lang, "View All Programs", "Ver todos los programas")} <ArrowRight className="w-4 h-4" />
             </a>
           </div>
         </div>
 
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
-          {PROGRAMS.map((p) => {
+          {programs(lang).map((p) => {
             const Icon = p.icon;
             return (
               <article
@@ -98,7 +106,7 @@ export default function GtPrograms() {
                     href="/programs"
                     className="mt-5 inline-flex items-center gap-2 text-[13px] font-bold text-[var(--gt-green)] hover:gap-3 transition-all"
                   >
-                    Learn More <ArrowRight className="w-4 h-4" />
+                    {tx(lang, "Learn More", "Más información")} <ArrowRight className="w-4 h-4" />
                   </a>
                 </div>
               </article>

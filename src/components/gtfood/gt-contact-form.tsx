@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { ArrowRight, CheckCircle2, ChevronDown, ShieldAlert } from "lucide-react";
+import { tx, useLang } from "./language";
 
 /*
  * Partnership inquiry form.
@@ -20,13 +21,13 @@ import { ArrowRight, CheckCircle2, ChevronDown, ShieldAlert } from "lucide-react
  */
 
 const INQUIRY_TYPES = [
-  "Health Plan / Social Care Network",
-  "Healthcare Provider / Care Team",
-  "Community Organization",
-  "Food-Service Partnership",
-  "Clinical / RDN Coordination",
-  "Compliance / Credentialing",
-  "General",
+  { en: "Health Plan / Social Care Network", es: "Plan de salud / Red de Cuidado Social" },
+  { en: "Healthcare Provider / Care Team", es: "Proveedor de salud / equipo de cuidado" },
+  { en: "Community Organization", es: "Organización comunitaria" },
+  { en: "Food-Service Partnership", es: "Colaboración de servicio de alimentos" },
+  { en: "Clinical / RDN Coordination", es: "Coordinación clínica / RDN" },
+  { en: "Compliance / Credentialing", es: "Cumplimiento / credenciales" },
+  { en: "General", es: "General" },
 ];
 
 const labelCls =
@@ -44,6 +45,7 @@ function RequiredMark() {
 
 export default function PartnershipForm() {
   const [sent, setSent] = useState(false);
+  const { lang } = useLang();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -62,22 +64,20 @@ export default function PartnershipForm() {
           <CheckCircle2 className="h-8 w-8 text-[var(--gt-gold-deep)]" strokeWidth={1.8} />
         </span>
         <h3 className="font-serif-display mt-6 text-[30px] font-bold text-[var(--gt-green)]">
-          Thank you.
+          {tx(lang, "Thank you.", "Gracias.")}
         </h3>
         <p className="mx-auto mt-3 max-w-[460px] text-[15px] leading-relaxed text-[var(--gt-body)]">
-          Your message has been received and will be routed to the right team
-          at GT Food Group.
+          {tx(lang, "Your message has been received and will be routed to the right team at GT Food Group.", "Recibimos su mensaje y lo enviaremos al equipo correcto de GT Food Group.")}
         </p>
         <p className="mt-4 text-[13px] italic text-[var(--gt-rose)]">
-          A reminder: please don&rsquo;t include health information in any
-          follow-up email.
+          {tx(lang, "A reminder: please don’t include health information in any follow-up email.", "Un recordatorio: no incluya información de salud en ningún correo de seguimiento.")}
         </p>
         <button
           type="button"
           onClick={() => setSent(false)}
           className="mt-8 inline-flex items-center gap-2 rounded-md border-2 border-[var(--gt-green)] px-6 py-3 text-[13.5px] font-bold text-[var(--gt-green)] transition-colors hover:bg-[var(--gt-green)] hover:text-white"
         >
-          Send another message
+          {tx(lang, "Send another message", "Enviar otro mensaje")}
         </button>
       </div>
     );
@@ -86,14 +86,13 @@ export default function PartnershipForm() {
   return (
     <form onSubmit={handleSubmit}>
       <p className="text-[14.5px] leading-relaxed text-[var(--gt-body)]">
-        Share a few details and the right team at GT will pick it up from
-        there. Every inquiry is routed to the desk that owns it.
+        {tx(lang, "Share a few details and the right team at GT will pick it up from there. Every inquiry is routed to the desk that owns it.", "Comparta unos datos y el equipo correcto de GT continuará desde ahí. Cada consulta se dirige al escritorio que le corresponde.")}
       </p>
 
       <div className="mt-7 grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="first-name" className={labelCls}>
-            First Name <RequiredMark />
+            {tx(lang, "First Name", "Nombre")} <RequiredMark />
           </label>
           <input
             id="first-name"
@@ -107,7 +106,7 @@ export default function PartnershipForm() {
         </div>
         <div>
           <label htmlFor="last-name" className={labelCls}>
-            Last Name <RequiredMark />
+            {tx(lang, "Last Name", "Apellido")} <RequiredMark />
           </label>
           <input
             id="last-name"
@@ -121,7 +120,7 @@ export default function PartnershipForm() {
         </div>
         <div>
           <label htmlFor="organization" className={labelCls}>
-            Organization <RequiredMark />
+            {tx(lang, "Organization", "Organización")} <RequiredMark />
           </label>
           <input
             id="organization"
@@ -129,13 +128,13 @@ export default function PartnershipForm() {
             type="text"
             required
             autoComplete="organization"
-            placeholder="Organization name"
+            placeholder={tx(lang, "Organization name", "Nombre de la organización")}
             className={inputCls}
           />
         </div>
         <div>
           <label htmlFor="role-title" className={labelCls}>
-            Role / Title <RequiredMark />
+            {tx(lang, "Role / Title", "Cargo / título")} <RequiredMark />
           </label>
           <input
             id="role-title"
@@ -143,13 +142,13 @@ export default function PartnershipForm() {
             type="text"
             required
             autoComplete="organization-title"
-            placeholder="Role or title"
+            placeholder={tx(lang, "Role or title", "Cargo o título")}
             className={inputCls}
           />
         </div>
         <div>
           <label htmlFor="email" className={labelCls}>
-            Email <RequiredMark />
+            {tx(lang, "Email", "Correo electrónico")} <RequiredMark />
           </label>
           <input
             id="email"
@@ -163,7 +162,7 @@ export default function PartnershipForm() {
         </div>
         <div className="sm:col-span-2">
           <label htmlFor="inquiry-type" className={labelCls}>
-            Inquiry Type <RequiredMark />
+            {tx(lang, "Inquiry Type", "Tipo de consulta")} <RequiredMark />
           </label>
           <div className="relative">
             <select
@@ -173,10 +172,10 @@ export default function PartnershipForm() {
               defaultValue=""
               className={`${inputCls} appearance-none pr-11`}
             >
-              <option value="">Select an inquiry type</option>
-              {INQUIRY_TYPES.map((t) => (
-                <option key={t} value={t}>
-                  {t}
+              <option value="">{tx(lang, "Select an inquiry type", "Seleccione un tipo de consulta")}</option>
+              {INQUIRY_TYPES.map((item) => (
+                <option key={item.en} value={item.en}>
+                  {tx(lang, item.en, item.es)}
                 </option>
               ))}
             </select>
@@ -189,9 +188,9 @@ export default function PartnershipForm() {
         </div>
         <div className="sm:col-span-2">
           <label htmlFor="phone" className={labelCls}>
-            Phone{" "}
+            {tx(lang, "Phone", "Teléfono")}{" "}
             <span className="ml-1 normal-case tracking-normal text-[var(--gt-body)] font-semibold">
-              (optional)
+              {tx(lang, "(optional)", "(opcional)")}
             </span>
           </label>
           <input
@@ -199,20 +198,20 @@ export default function PartnershipForm() {
             name="phone"
             type="tel"
             autoComplete="tel"
-            placeholder="Optional business phone"
+            placeholder={tx(lang, "Optional business phone", "Teléfono de trabajo, opcional")}
             className={inputCls}
           />
         </div>
         <div className="sm:col-span-2">
           <label htmlFor="message" className={labelCls}>
-            Message <RequiredMark />
+            {tx(lang, "Message", "Mensaje")} <RequiredMark />
           </label>
           <textarea
             id="message"
             name="message"
             required
             rows={5}
-            placeholder="Tell us about your organization, the people you serve, and what you're planning."
+            placeholder={tx(lang, "Tell us about your organization, the people you serve, and what you're planning.", "Cuéntenos sobre su organización, las personas a quienes sirve y lo que está planeando.")}
             className={`${inputCls} resize-y`}
           />
         </div>
@@ -228,8 +227,7 @@ export default function PartnershipForm() {
           aria-hidden="true"
         />
         <p className="text-[13px] leading-relaxed text-[var(--gt-ink)]/85">
-          Do not submit diagnoses, Medicaid IDs, DOB, medical records, or
-          other health information.
+          {tx(lang, "Do not submit diagnoses, Medicaid IDs, DOB, medical records, or other health information.", "No envíe diagnósticos, identificaciones de Medicaid, fecha de nacimiento, expedientes médicos ni otra información de salud.")}
         </p>
       </div>
 
@@ -238,10 +236,10 @@ export default function PartnershipForm() {
           type="submit"
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-md bg-[var(--gt-gold)] px-8 py-4 text-[14px] font-bold text-[var(--gt-green-deep)] transition-colors hover:bg-[var(--gt-gold-deep)]"
         >
-          Send Message <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          {tx(lang, "Send Message", "Enviar mensaje")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </button>
         <p className="text-[12.5px] text-[var(--gt-body)]">
-          Fields marked <RequiredMark /> are required.
+          {tx(lang, "Fields marked", "Los campos marcados con")} <RequiredMark /> {tx(lang, "are required.", "son obligatorios.")}
         </p>
       </div>
     </form>
