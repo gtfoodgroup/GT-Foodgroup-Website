@@ -234,7 +234,7 @@ export function ClinicalWorkflow() {
           ))}
         </ol>
 
-        <p className="mt-14 rounded-md bg-[var(--gt-rose-soft)] px-6 py-4 text-[14px] font-semibold text-[var(--gt-rose)] leading-relaxed">
+        <p className="mt-14 rounded-md bg-[var(--gt-rose-soft)] px-6 py-4 text-center text-[14px] font-semibold text-[var(--gt-rose)] leading-relaxed">
           {tx(
             lang,
             "Maya does not screen, enroll, or refer members. Program eligibility is determined by the member’s Social Care Network.",
