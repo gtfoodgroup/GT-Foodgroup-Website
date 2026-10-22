@@ -19,7 +19,7 @@ const CUISINES = [
   { image: "/images/gt/cuisine-dominicana.png", label: "Dominicana" },
   { image: "/images/gt/cuisine-boricua.png", label: "Boricua" },
   { image: "/images/gt/cuisine-caribbean.png", label: "Caribeña" },
-  { image: "/images/gt/cuisine-mexican.png", label: "Mexicana" },
+  { image: "/images/gt/cuisine-mexican.jpg", label: "Mexicana" },
   { image: "/images/gt/cuisine-peruvian.png", label: "Peruana" },
 ];
 
