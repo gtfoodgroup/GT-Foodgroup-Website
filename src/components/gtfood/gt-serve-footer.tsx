@@ -37,9 +37,9 @@ const AUDIENCES = [
     esText: "Programas de alimentos construidos alrededor de las comunidades que usted ya conoce.",
   },
   {
-    image: "/images/gt/serve-families.png",
-    enAlt: "A multigenerational family sharing dinner at home",
-    esAlt: "Una familia de varias generaciones compartiendo la cena en casa",
+    image: "/images/gt/serve-families.jpg",
+    enAlt: "Family members passing a home-cooked meal around the table",
+    esAlt: "Familiares compartiendo una comida casera alrededor de la mesa",
     icon: HeartHandshake,
     en: "Members & Families",
     es: "Miembros y familias",
