@@ -5,7 +5,9 @@ import {
   AboutMaya,
   WorksAndPlatform,
   MayaRole,
+  MayaLinks,
   ClinicalWorkflow,
+  MayaClose,
 } from "@/components/gtfood/gt-maya-page";
 import { GtFooter } from "@/components/gtfood/gt-serve-footer";
 
@@ -32,7 +34,9 @@ export default function ClinicalAuthorityPage() {
         <AboutMaya />
         <WorksAndPlatform />
         <MayaRole />
+        <MayaLinks />
         <ClinicalWorkflow />
+        <MayaClose />
       </main>
       <GtFooter />
     </div>
