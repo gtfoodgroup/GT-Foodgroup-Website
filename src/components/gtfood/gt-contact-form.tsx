@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { FormEvent } from "react";
+import emailjs from "@emailjs/browser";
 import { ArrowRight, CheckCircle2, ChevronDown, ShieldAlert } from "lucide-react";
 import { tx, useLang } from "./language";
 
@@ -45,16 +46,36 @@ function RequiredMark() {
 
 export default function PartnershipForm() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
   const { lang } = useLang();
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
-    setSent(true);
+
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+    if (!serviceId || !templateId || !publicKey) {
+      setError(true);
+      return;
+    }
+
+    setSending(true);
+    setError(false);
+    try {
+      await emailjs.sendForm(serviceId, templateId, form, { publicKey });
+      setSent(true);
+    } catch {
+      setError(true);
+    } finally {
+      setSending(false);
+    }
   }
 
   if (sent) {
@@ -234,14 +255,24 @@ export default function PartnershipForm() {
       <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center">
         <button
           type="submit"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-md bg-[var(--gt-gold)] px-8 py-4 text-[14px] font-bold text-[var(--gt-green-deep)] transition-colors hover:bg-[var(--gt-gold-deep)]"
+          disabled={sending}
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-md bg-[var(--gt-gold)] px-8 py-4 text-[14px] font-bold text-[var(--gt-green-deep)] transition-colors hover:bg-[var(--gt-gold-deep)] disabled:opacity-60"
         >
-          {tx(lang, "Send Message", "Enviar mensaje")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          {tx(lang, sending ? "Sending…" : "Send Message", sending ? "Enviando…" : "Enviar mensaje")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </button>
         <p className="text-[12.5px] text-[var(--gt-body)]">
           {tx(lang, "Fields marked", "Los campos marcados con")} <RequiredMark /> {tx(lang, "are required.", "son obligatorios.")}
         </p>
       </div>
+      {error && (
+        <p role="alert" className="mt-4 text-[13.5px] leading-relaxed text-[var(--gt-rose)]">
+          {tx(
+            lang,
+            "Your message could not be sent. Please try again, or email info@gtfoodgroup.com.",
+            "No se pudo enviar su mensaje. Inténtelo de nuevo o escriba a info@gtfoodgroup.com.",
+          )}
+        </p>
+      )}
     </form>
   );
 }
